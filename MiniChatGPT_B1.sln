@@ -13,6 +13,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{0AB3BF05
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Integration.DataPipeline", "tests\Integration.DataPipeline\Integration.DataPipeline.csproj", "{481FD937-E2F0-4BF3-91F6-C1F0FB1AA75E}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lib.Corpus.Tests", "src\Lib.CorpusTeamA1\Lib.Corpus.Tests\Lib.Corpus.Tests.csproj", "{72276669-6B58-484F-8D29-1A93C3D63BC0}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -47,6 +49,18 @@ Global
 		{481FD937-E2F0-4BF3-91F6-C1F0FB1AA75E}.Release|x64.Build.0 = Release|Any CPU
 		{481FD937-E2F0-4BF3-91F6-C1F0FB1AA75E}.Release|x86.ActiveCfg = Release|Any CPU
 		{481FD937-E2F0-4BF3-91F6-C1F0FB1AA75E}.Release|x86.Build.0 = Release|Any CPU
+		{72276669-6B58-484F-8D29-1A93C3D63BC0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{72276669-6B58-484F-8D29-1A93C3D63BC0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{72276669-6B58-484F-8D29-1A93C3D63BC0}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{72276669-6B58-484F-8D29-1A93C3D63BC0}.Debug|x64.Build.0 = Debug|Any CPU
+		{72276669-6B58-484F-8D29-1A93C3D63BC0}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{72276669-6B58-484F-8D29-1A93C3D63BC0}.Debug|x86.Build.0 = Debug|Any CPU
+		{72276669-6B58-484F-8D29-1A93C3D63BC0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{72276669-6B58-484F-8D29-1A93C3D63BC0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{72276669-6B58-484F-8D29-1A93C3D63BC0}.Release|x64.ActiveCfg = Release|Any CPU
+		{72276669-6B58-484F-8D29-1A93C3D63BC0}.Release|x64.Build.0 = Release|Any CPU
+		{72276669-6B58-484F-8D29-1A93C3D63BC0}.Release|x86.ActiveCfg = Release|Any CPU
+		{72276669-6B58-484F-8D29-1A93C3D63BC0}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -55,5 +69,6 @@ Global
 		{CD036FFA-36BA-706B-142A-FC7A489034ED} = {827E0CD3-B72D-47B6-A68D-7590B98EB39B}
 		{A709F6A1-570B-4998-A1A7-59E2147D0768} = {CD036FFA-36BA-706B-142A-FC7A489034ED}
 		{481FD937-E2F0-4BF3-91F6-C1F0FB1AA75E} = {0AB3BF05-4346-4AA6-1389-037BE0695223}
+		{72276669-6B58-484F-8D29-1A93C3D63BC0} = {CD036FFA-36BA-706B-142A-FC7A489034ED}
 	EndGlobalSection
 EndGlobal
