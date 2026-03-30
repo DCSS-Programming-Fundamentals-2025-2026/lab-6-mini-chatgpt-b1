@@ -2,14 +2,14 @@ public class CorpusSplitter
 {
     public string[] Splitter(string text, double ValidateFraction)
     {
-        if (text == null || text == " " || text == "")
+        if (string.IsNullOrWhiteSpace(text))
         {
             throw new NullReferenceException("Nothing to split here");
         }
 
         int Validate = (int)(text.Length * ValidateFraction);
 
-        if (ValidateFraction <= 0 ||  ValidateFraction >= 1 || Math.Truncate((decimal)Validate) == 0 || Math.Truncate((decimal)(text.Length - Validate)) == 0)
+        if (ValidateFraction <= 0 || ValidateFraction >= 1 || Math.Truncate((decimal)Validate) == 0 || Math.Truncate((decimal)(text.Length - Validate)) == 0)
         {
             throw new Exception("Incorrect validate fraction.");
         }

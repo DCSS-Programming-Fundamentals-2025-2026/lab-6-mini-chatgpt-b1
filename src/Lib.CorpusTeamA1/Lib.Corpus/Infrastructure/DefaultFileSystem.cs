@@ -2,7 +2,7 @@ public class DefaultFileSystem : IFileSystem
 {
     public string ReadAllText(string path)
     {
-        if (path == null || path == " " || path == "")
+        if (string.IsNullOrWhiteSpace(path))
         {
             throw new FileNotFoundException("Couldn't find directory");
         }
