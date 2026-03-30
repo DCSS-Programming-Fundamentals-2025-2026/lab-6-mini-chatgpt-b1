@@ -18,6 +18,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\src\Lib.CorpusTeamA1\Lib.Corpus\Lib.Corpus.csproj" />
+    <ProjectReference Include="..\..\src\Lib.TokenizationTeamA2\Lib.Tokenization\Lib.Tokenization.csproj" />
   </ItemGroup>
 
   <ItemGroup>
