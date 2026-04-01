@@ -1,5 +1,6 @@
 ﻿using NUnit.Framework;
 using Lib.Tokenization;
+using System.Text.Json;
 using Lib.Tokenization.Model;
 
 namespace Lib.Tokenization.Tests
@@ -46,6 +47,24 @@ namespace Lib.Tokenization.Tests
 
             string decoded = _tokenizer.Decode(new int[0]);
             Assert.That(decoded, Is.EqualTo("")); 
+        }
+
+        [Test]
+        public void Checkpoint_RoundTrip_Serialization()
+        {
+            var payload = _tokenizer.GetPayloadForCheckpoint();
+
+            string jsonString = JsonSerializer.Serialize(payload);
+            using JsonDocument doc = JsonDocument.Parse(jsonString);
+
+            var factory = new CharTokenizerFactory();
+            var restoredTokenizer = factory.FromPayload(doc.RootElement);
+
+            string testText = "світ";
+            int[] encoded = restoredTokenizer.Encode(testText);
+            string decoded = restoredTokenizer.Decode(encoded);
+
+            Assert.That(decoded, Is.EqualTo(testText));
         }
     }
 }

@@ -1,18 +1,18 @@
+
 using System.Text.RegularExpressions;
-namespace Lib.Tokenization.Model;
 
 public class WordVocabulary
 {
     private readonly Dictionary<string, int> _wordToId = new Dictionary<string, int>();
     private readonly Dictionary<int, string> _idToWord = new Dictionary<int, string>();
 
-    public int Size 
-    { 
-        get { return _wordToId.Count; } 
+    public int Size
+    {
+        get { return _wordToId.Count; }
     }
 
     public const int UnkId = 0;
-    public const string UnkWord = "<UNK>"; 
+    public const string UnkWord = "<UNK>";
 
     public WordVocabulary()
     {
@@ -27,8 +27,8 @@ public class WordVocabulary
             return;
         }
 
-        string[] rawWords = Regex.Split(text, @"\s+");
-        int nextId = Size; 
+        string[] rawWords = Regex.Split(text, @"\s+");    // Розбиває на масив як Split() , проте ігнорує всі пробіли і переходи на інший рядок
+        int nextId = Size;
 
         foreach (string w in rawWords)
         {
@@ -49,15 +49,15 @@ public class WordVocabulary
 
     public static string CleanWord(string word)
     {
-        var cleaned = new System.Text.StringBuilder();
+        var cleaned = new System.Text.StringBuilder(); //Дописує в кінець  не переписуючи все заново
         foreach (char c in word)
         {
-            if (char.IsPunctuation(c) == false) 
+            if (char.IsPunctuation(c) == false)
             {
                 cleaned.Append(c);
             }
         }
-        return cleaned.ToString().ToLowerInvariant(); 
+        return cleaned.ToString().ToLowerInvariant();
     }
 
     public int GetId(string word)

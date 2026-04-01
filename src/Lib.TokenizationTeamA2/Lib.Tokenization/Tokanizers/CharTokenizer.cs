@@ -1,8 +1,4 @@
 ﻿using System.Text;
-using Lib.Tokenization.Model;
-
-namespace Lib.Tokenization;
-
 public class CharTokenizer : ITokenizer
 {
     private readonly Vocabulary _vocabulary;
@@ -52,3 +48,7 @@ public class CharTokenizer : ITokenizer
         return new { chars = _vocabulary.GetPayload() };
     }
 }
+
+
+
+

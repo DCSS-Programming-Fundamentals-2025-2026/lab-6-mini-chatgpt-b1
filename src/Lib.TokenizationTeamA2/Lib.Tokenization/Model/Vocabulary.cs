@@ -1,17 +1,20 @@
-namespace Lib.Tokenization.Model;
-
 public class Vocabulary
 {
     private readonly Dictionary<char, int> _charToId = new Dictionary<char, int>();
     private readonly Dictionary<int, char> _idToChar = new Dictionary<int, char>();
 
-    public int Size 
-    { 
-        get { return _charToId.Count; } 
+    public int Size
+    {
+        get { return _charToId.Count; }
     }
 
+    /* Unknown characters encode to id 0.
+       On decode this maps to the '\0' (NUL) character,
+       making a literal NUL in input indistinguishable from an unknown token.
+    */
+
     public const int UnkId = 0;
-    public const char UnkChar = '\0'; 
+    public const char UnkChar = '\0';
 
     public Vocabulary()
     {
@@ -21,7 +24,7 @@ public class Vocabulary
 
     public void BuildFromText(string text)
     {
-        int nextId = Size; 
+        int nextId = Size;
         foreach (char c in text)
         {
             if (_charToId.ContainsKey(c) == false)
@@ -82,9 +85,13 @@ public class Vocabulary
             {
                 c = '\0';
             }
-
-            _charToId[c] = i;
-            _idToChar[i] = c;
+            if (!_charToId.ContainsKey(c))
+            {
+                _charToId[c] = i;
+                _idToChar[i] = c;
+            }
         }
     }
 }
+
+

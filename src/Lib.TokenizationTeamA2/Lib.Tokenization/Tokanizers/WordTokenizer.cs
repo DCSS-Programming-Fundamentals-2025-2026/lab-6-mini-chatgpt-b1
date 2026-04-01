@@ -1,9 +1,5 @@
 using System.Text;
 using System.Text.RegularExpressions;
-using Lib.Tokenization.Model;
-
-namespace Lib.Tokenization;
-
 public class WordTokenizer : ITokenizer
 {
     private readonly WordVocabulary _vocabulary;
@@ -13,9 +9,9 @@ public class WordTokenizer : ITokenizer
         _vocabulary = vocabulary;
     }
 
-    public int VocabSize 
-    { 
-        get { return _vocabulary.Size; } 
+    public int VocabSize
+    {
+        get { return _vocabulary.Size; }
     }
 
     public int[] Encode(string text)
@@ -65,3 +61,7 @@ public class WordTokenizer : ITokenizer
         return new { words = _vocabulary.GetPayload() };
     }
 }
+
+
+
+

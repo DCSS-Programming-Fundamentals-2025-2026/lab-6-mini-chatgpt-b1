@@ -1,8 +1,4 @@
 using System.Text.Json;
-using Lib.Tokenization.Model;
-
-namespace Lib.Tokenization.Serialization;
-
 public static class TokenizerPayloadSerializer
 {
     public static Vocabulary DeserializeCharVocab(JsonElement payload)
@@ -53,3 +49,7 @@ public static class TokenizerPayloadSerializer
         return vocab;
     }
 }
+
+
+
+

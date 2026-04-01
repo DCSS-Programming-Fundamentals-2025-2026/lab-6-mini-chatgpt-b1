@@ -1,9 +1,4 @@
 using System.Text.Json;
-using Lib.Tokenization.Model;
-using Lib.Tokenization.Serialization;
-
-namespace Lib.Tokenization;
-
 public class CharTokenizerFactory : ITokenizerFactory
 {
     public ITokenizer BuildFromText(string text)
@@ -22,3 +17,7 @@ public class CharTokenizerFactory : ITokenizerFactory
         return new CharTokenizer(vocab);
     }
 }
+
+
+
+

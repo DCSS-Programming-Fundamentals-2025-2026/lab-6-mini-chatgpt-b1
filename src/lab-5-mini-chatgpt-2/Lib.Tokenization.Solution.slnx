@@ -1,4 +1,0 @@
-<Solution>
-  <Project Path="Lib.Tokenization.Tests/Lib.Tokenization.Tests.csproj" />
-  <Project Path="Lib.Tokenization/Lib.Tokenization.csproj" />
-</Solution>

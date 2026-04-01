@@ -1,5 +1,3 @@
-namespace Lib.Tokenization;
-
 public interface ITokenizer
 {
     int VocabSize { get; }
@@ -7,3 +5,5 @@ public interface ITokenizer
     string Decode(ReadOnlySpan<int> tokens);
     object GetPayloadForCheckpoint();
 }
+
+
