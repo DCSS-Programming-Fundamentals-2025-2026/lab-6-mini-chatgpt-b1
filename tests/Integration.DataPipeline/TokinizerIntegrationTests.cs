@@ -1,5 +1,7 @@
 ﻿
 
+using System.Xml.Linq;
+
 namespace Integration.DataPipeline.Tests;
 
 [TestFixture]
@@ -67,6 +69,45 @@ public class TokenizerIntegrationTests
         string decoded = tokenizer.Decode(encoded);
 
         Assert.That(decoded, Is.EqualTo(corpus.TrainText));
+    }
+
+    [Test]
+    public void CorpusLoader_LoadMissingFile_ReturnsFallback()
+    {
+        var loadOptions = new CorpusLoadOptions(true, 0.1, "1234567890");
+        CorpusClass corpus = loader.Load("not existing file", loadOptions);
+
+        ITokenizerFactory factory = new CharTokenizerFactory();
+        ITokenizer tokenizerTrain = factory.BuildFromText(corpus.TrainText);
+        ITokenizer tokenizerVal = factory.BuildFromText(corpus.ValText);
+
+        int[] encodedTrain = tokenizerTrain.Encode(corpus.TrainText);
+        string decodedTrain = tokenizerTrain.Decode(encodedTrain);
+
+        int[] encodedVal = tokenizerVal.Encode(corpus.ValText);
+        string decodedVal = tokenizerVal.Decode(encodedVal);
+
+        Assert.That(decodedTrain, Is.EqualTo("123456789"));
+        Assert.That(decodedVal, Is.EqualTo("0"));
+    }
+
+    [Test]
+    public void CorpusAndTokenizer_EmptyText_HandledGracefully()
+    {
+        CorpusClass corpus = new CorpusClass("", "");
+
+        ITokenizerFactory factory = new CharTokenizerFactory();
+        ITokenizer tokenizerTrain = factory.BuildFromText(corpus.TrainText);
+        ITokenizer tokenizerVal = factory.BuildFromText(corpus.ValText);
+
+        int[] encodedTrain = tokenizerTrain.Encode(corpus.TrainText);
+        string decodedTrain = tokenizerTrain.Decode(encodedTrain);
+
+        int[] encodedVal = tokenizerVal.Encode(corpus.ValText);
+        string decodedVal = tokenizerVal.Decode(encodedVal);
+
+        Assert.That(decodedTrain, Is.EqualTo(""));
+        Assert.That(decodedVal, Is.EqualTo(""));
     }
 }
 
