@@ -8,9 +8,9 @@ public class CharTokenizer : ITokenizer
         _vocabulary = vocabulary;
     }
 
-    public int VocabSize 
-    { 
-        get { return _vocabulary.Size; } 
+    public int VocabSize
+    {
+        get { return _vocabulary.Size; }
     }
 
     public int[] Encode(string text)
@@ -32,7 +32,7 @@ public class CharTokenizer : ITokenizer
     {
         if (tokens.Length == 0)
         {
-            return "";
+            return string.Empty;
         }
 
         StringBuilder sb = new StringBuilder();
