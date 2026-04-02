@@ -1,5 +1,4 @@
 using System.Text.Json;
-namespace Lib.Tokenization;
 
 public class WordTokenizerFactory : ITokenizerFactory
 {
@@ -19,4 +18,5 @@ public class WordTokenizerFactory : ITokenizerFactory
         return new WordTokenizer(vocab);
     }
 }
+
 
