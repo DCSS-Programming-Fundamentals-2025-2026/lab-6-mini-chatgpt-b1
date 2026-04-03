@@ -1,4 +1,8 @@
-﻿namespace Lib.Corpus.Tests;
+﻿using Lib.Corpus.Configuration;
+using Lib.Corpus.Domain;
+using Lib.Corpus.Processing;
+
+namespace Lib.Corpus.Tests;
 
 public class Fake : IFileSystem
 {

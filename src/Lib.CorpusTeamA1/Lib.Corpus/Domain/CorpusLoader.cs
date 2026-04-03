@@ -1,58 +1,57 @@
-public class CorpusLoader : ICorpusLoader
+using Lib.Corpus.Configuration;
+using Lib.Corpus.Processing;
+
+namespace Lib.Corpus.Domain
 {
-    private readonly CorpusTextNormalizer textNormalizer;
-    private readonly CorpusSplitter corpusSplitter;
-    private readonly IFileSystem defaultFileSystem;
-
-    public CorpusLoader(CorpusTextNormalizer textNormalizer, CorpusSplitter corpusSplitter, IFileSystem defaultFileSystem)
+    public class CorpusLoader : ICorpusLoader
     {
-        this.textNormalizer = textNormalizer;
-        this.corpusSplitter = corpusSplitter;
-        this.defaultFileSystem = defaultFileSystem;
-    }
+        private readonly CorpusTextNormalizer textNormalizer;
+        private readonly CorpusSplitter corpusSplitter;
+        private readonly IFileSystem defaultFileSystem;
 
-    public CorpusClass Load(string path, CorpusLoadOptions? options)
-    {
-        if (options == null)
+        public CorpusLoader(CorpusTextNormalizer textNormalizer, CorpusSplitter corpusSplitter, IFileSystem defaultFileSystem)
         {
-            options = new CorpusLoadOptions();
+            this.textNormalizer = textNormalizer;
+            this.corpusSplitter = corpusSplitter;
+            this.defaultFileSystem = defaultFileSystem;
         }
 
-        bool exist = defaultFileSystem.Exists(path);
-        string content;
-
-        if (exist)
+        public CorpusClass Load(string path, CorpusLoadOptions? options)
         {
-            content = defaultFileSystem.ReadAllText(path);
+            if (options == null)
+            {
+                options = new CorpusLoadOptions();
+            }
+
+            bool exist = defaultFileSystem.Exists(path);
+            string content;
+
+            if (exist)
+            {
+                content = defaultFileSystem.ReadAllText(path);
+            }
+            else
+            {
+                content = options.FallBack;
+            }
+
+            return LoadFromText(content, options);
         }
-        else
+
+        public CorpusClass LoadFromText(string text, CorpusLoadOptions? options)
         {
-            content = options.FallBack;
+            if (options == null)
+            {
+                options = new CorpusLoadOptions();
+            }
+
+            text = textNormalizer.Normalize(options.LowerCase, text);
+
+            string[] parts = corpusSplitter.Splitter(text, options.ValidateFraction);
+            string TrainText = parts[0];
+            string ValidatePart = parts[1];
+
+            return new CorpusClass(TrainText, ValidatePart);
         }
-
-        return LoadFromText(content, options);
-    }
-
-    public CorpusClass LoadFromText(string text, CorpusLoadOptions? options)
-    {
-        if (options == null)
-        {
-            options = new CorpusLoadOptions();
-        }
-
-        text = textNormalizer.Normalize(options.LowerCase, text);
-
-        string[] parts = corpusSplitter.Splitter(text, options.ValidateFraction);
-        string TrainText = parts[0];
-        string ValidatePart = parts[1];
-
-        return new CorpusClass(TrainText, ValidatePart);
     }
 }
-
-
-
-
-
-
-

@@ -1,17 +1,23 @@
-﻿
+﻿namespace Integration.DataPipeline.Tests;
 
-using System.Xml.Linq;
-
-namespace Integration.DataPipeline.Tests;
+public class Fake : IFileSystem
+{
+    public string? File { get; set; }
+    public bool ExistsFile { get; set; }
+    public string ReadAllText(string text) => File;
+    public bool Exists(string text) => ExistsFile;
+}
 
 [TestFixture]
 public class TokenizerIntegrationTests
 {
     private CorpusLoader loader;
+    private Fake fakeFikeSystem;
 
     [SetUp]
     public void Setup()
     {
+        fakeFikeSystem = new Fake();
         var normalizer = new CorpusTextNormalizer();
         var splitter = new CorpusSplitter();
         var defaultFileSystem = new DefaultFileSystem();
@@ -108,6 +114,29 @@ public class TokenizerIntegrationTests
 
         Assert.That(decodedTrain, Is.EqualTo(""));
         Assert.That(decodedVal, Is.EqualTo(""));
+    }
+
+    [Test]
+    public void ReadFromFileAndTokanize()
+    {
+        fakeFikeSystem.ExistsFile = true;
+        fakeFikeSystem.File = "abcdefghijklvnopqrst";
+        var options = new CorpusLoadOptions(true, 0.2, "fallback");
+
+        CorpusClass corpus = loader.Load("existing.txt", options);
+
+        ITokenizerFactory factory = new CharTokenizerFactory();
+        ITokenizer tokenizerTrain = factory.BuildFromText(corpus.TrainText);
+        ITokenizer tokenizerVal = factory.BuildFromText(corpus.ValText);
+
+        int[] encodedTrain = tokenizerTrain.Encode(corpus.TrainText);
+        string decodedTrain = tokenizerTrain.Decode(encodedTrain);
+
+        int[] encodedVal = tokenizerVal.Encode(corpus.ValText);
+        string decodedVal = tokenizerVal.Decode(encodedVal);
+
+        Assert.That(decodedTrain, Is.EqualTo("abcdefghijklvnop"));
+        Assert.That(decodedVal, Is.EqualTo("qrst"));
     }
 }
 

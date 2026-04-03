@@ -21,6 +21,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lib.Tokenization", "src\Lib
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lib.Tokenization.Tests", "src\Lib.TokenizationTeamA2\Lib.Tokenization.Tests\Lib.Tokenization.Tests.csproj", "{58318AAE-6D25-4C5E-A5CA-D21C52277BB9}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestProgram", "TestProgram\TestProgram.csproj", "{D0B48791-CF24-4849-9AC4-AF376658757F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -91,6 +93,18 @@ Global
 		{58318AAE-6D25-4C5E-A5CA-D21C52277BB9}.Release|x64.Build.0 = Release|Any CPU
 		{58318AAE-6D25-4C5E-A5CA-D21C52277BB9}.Release|x86.ActiveCfg = Release|Any CPU
 		{58318AAE-6D25-4C5E-A5CA-D21C52277BB9}.Release|x86.Build.0 = Release|Any CPU
+		{D0B48791-CF24-4849-9AC4-AF376658757F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D0B48791-CF24-4849-9AC4-AF376658757F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D0B48791-CF24-4849-9AC4-AF376658757F}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{D0B48791-CF24-4849-9AC4-AF376658757F}.Debug|x64.Build.0 = Debug|Any CPU
+		{D0B48791-CF24-4849-9AC4-AF376658757F}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{D0B48791-CF24-4849-9AC4-AF376658757F}.Debug|x86.Build.0 = Debug|Any CPU
+		{D0B48791-CF24-4849-9AC4-AF376658757F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D0B48791-CF24-4849-9AC4-AF376658757F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D0B48791-CF24-4849-9AC4-AF376658757F}.Release|x64.ActiveCfg = Release|Any CPU
+		{D0B48791-CF24-4849-9AC4-AF376658757F}.Release|x64.Build.0 = Release|Any CPU
+		{D0B48791-CF24-4849-9AC4-AF376658757F}.Release|x86.ActiveCfg = Release|Any CPU
+		{D0B48791-CF24-4849-9AC4-AF376658757F}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -103,5 +117,9 @@ Global
 		{7724AE2F-4B9F-D049-144A-93AFF2CD2483} = {827E0CD3-B72D-47B6-A68D-7590B98EB39B}
 		{F6534440-24BD-49F2-B98F-09B4BB88D5BD} = {7724AE2F-4B9F-D049-144A-93AFF2CD2483}
 		{58318AAE-6D25-4C5E-A5CA-D21C52277BB9} = {7724AE2F-4B9F-D049-144A-93AFF2CD2483}
+		{D0B48791-CF24-4849-9AC4-AF376658757F} = {827E0CD3-B72D-47B6-A68D-7590B98EB39B}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {7981CFE9-C0EF-44ED-9316-6C19F849732C}
 	EndGlobalSection
 EndGlobal

@@ -1,4 +1,6 @@
-﻿namespace Lib.Corpus.Tests;
+﻿using Lib.Corpus.Processing;
+
+namespace Lib.Corpus.Tests;
 
 public class TextNormalizerTests
 {
