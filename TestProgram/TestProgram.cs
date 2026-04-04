@@ -5,6 +5,9 @@
         string path = "TestText";
         File.WriteAllText(path, Console.ReadLine());
 
+        string content = File.ReadAllText(path);
+        Console.WriteLine(content);
+
 
     }
 }

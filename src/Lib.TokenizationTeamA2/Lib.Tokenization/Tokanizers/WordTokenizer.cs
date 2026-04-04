@@ -1,67 +1,69 @@
+using Lib.Tokenization.Interfaces;
+using Lib.Tokenization.Model;
 using System.Text;
 using System.Text.RegularExpressions;
-public class WordTokenizer : ITokenizer
+
+namespace Lib.Tokenization.Tokanizers
 {
-    private readonly WordVocabulary _vocabulary;
-
-    public WordTokenizer(WordVocabulary vocabulary)
+    public class WordTokenizer : ITokenizer
     {
-        _vocabulary = vocabulary;
-    }
+        private readonly WordVocabulary _vocabulary;
 
-    public int VocabSize
-    {
-        get { return _vocabulary.Size; }
-    }
-
-    public int[] Encode(string text)
-    {
-        if (string.IsNullOrWhiteSpace(text))
+        public WordTokenizer(WordVocabulary vocabulary)
         {
-            return new int[0];
+            _vocabulary = vocabulary;
         }
 
-        string[] rawWords = Regex.Split(text, @"\s+");
-        var tokens = new List<int>();
-
-        foreach (string w in rawWords)
+        public int VocabSize
         {
-            if (string.IsNullOrWhiteSpace(w))
+            get { return _vocabulary.Size; }
+        }
+
+        public int[] Encode(string text)
+        {
+            if (string.IsNullOrWhiteSpace(text))
             {
-                continue;
+                return new int[0];
             }
-            string cleaned = WordVocabulary.CleanWord(w);
-            tokens.Add(_vocabulary.GetId(cleaned));
-        }
 
-        return tokens.ToArray();
-    }
+            string[] rawWords = Regex.Split(text, @"\s+");
+            var tokens = new List<int>();
 
-    public string Decode(ReadOnlySpan<int> tokens)
-    {
-        if (tokens.Length == 0)
-        {
-            return "";
-        }
-
-        StringBuilder sb = new StringBuilder();
-        for (int i = 0; i < tokens.Length; i++)
-        {
-            sb.Append(_vocabulary.GetWord(tokens[i]));
-            if (i < tokens.Length - 1)
+            foreach (string w in rawWords)
             {
-                sb.Append(" ");
+                if (string.IsNullOrWhiteSpace(w))
+                {
+                    continue;
+                }
+                string cleaned = WordVocabulary.CleanWord(w);
+                tokens.Add(_vocabulary.GetId(cleaned));
             }
-        }
-        return sb.ToString();
-    }
 
-    public object GetPayloadForCheckpoint()
-    {
-        return new { words = _vocabulary.GetPayload() };
+            return tokens.ToArray();
+        }
+
+        public string Decode(ReadOnlySpan<int> tokens)
+        {
+            if (tokens.Length == 0)
+            {
+                return "";
+            }
+
+            StringBuilder sb = new StringBuilder();
+            for (int i = 0; i < tokens.Length; i++)
+            {
+                sb.Append(_vocabulary.GetWord(tokens[i]));
+                if (i < tokens.Length - 1)
+                {
+                    sb.Append(" ");
+                }
+            }
+            return sb.ToString();
+        }
+
+        public object GetPayloadForCheckpoint()
+        {
+            return new { words = _vocabulary.GetPayload() };
+        }
     }
 }
-
-
-
-

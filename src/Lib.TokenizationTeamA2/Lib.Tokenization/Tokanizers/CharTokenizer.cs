@@ -1,54 +1,56 @@
-﻿using System.Text;
-public class CharTokenizer : ITokenizer
+﻿using Lib.Tokenization.Interfaces;
+using Lib.Tokenization.Model;
+using System.Text;
+
+namespace Lib.Tokenization.Tokanizers
 {
-    private readonly Vocabulary _vocabulary;
-
-    public CharTokenizer(Vocabulary vocabulary)
+    public class CharTokenizer : ITokenizer
     {
-        _vocabulary = vocabulary;
-    }
+        private readonly Vocabulary _vocabulary;
 
-    public int VocabSize
-    {
-        get { return _vocabulary.Size; }
-    }
-
-    public int[] Encode(string text)
-    {
-        if (string.IsNullOrEmpty(text))
+        public CharTokenizer(Vocabulary vocabulary)
         {
-            return new int[0];
+            _vocabulary = vocabulary;
         }
 
-        int[] tokens = new int[text.Length];
-        for (int i = 0; i < text.Length; i++)
+        public int VocabSize
         {
-            tokens[i] = _vocabulary.GetId(text[i]);
-        }
-        return tokens;
-    }
-
-    public string Decode(ReadOnlySpan<int> tokens)
-    {
-        if (tokens.Length == 0)
-        {
-            return string.Empty;
+            get { return _vocabulary.Size; }
         }
 
-        StringBuilder sb = new StringBuilder();
-        foreach (int token in tokens)
+        public int[] Encode(string text)
         {
-            sb.Append(_vocabulary.GetChar(token));
-        }
-        return sb.ToString();
-    }
+            if (string.IsNullOrEmpty(text))
+            {
+                return new int[0];
+            }
 
-    public object GetPayloadForCheckpoint()
-    {
-        return new { chars = _vocabulary.GetPayload() };
+            int[] tokens = new int[text.Length];
+            for (int i = 0; i < text.Length; i++)
+            {
+                tokens[i] = _vocabulary.GetId(text[i]);
+            }
+            return tokens;
+        }
+
+        public string Decode(ReadOnlySpan<int> tokens)
+        {
+            if (tokens.Length == 0)
+            {
+                return string.Empty;
+            }
+
+            StringBuilder sb = new StringBuilder();
+            foreach (int token in tokens)
+            {
+                sb.Append(_vocabulary.GetChar(token));
+            }
+            return sb.ToString();
+        }
+
+        public object GetPayloadForCheckpoint()
+        {
+            return new { chars = _vocabulary.GetPayload() };
+        }
     }
 }
-
-
-
-

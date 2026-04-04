@@ -1,55 +1,56 @@
+using Lib.Tokenization.Model;
 using System.Text.Json;
-public static class TokenizerPayloadSerializer
+
+namespace Lib.Tokenization.Serialization
 {
-    public static Vocabulary DeserializeCharVocab(JsonElement payload)
+    public static class TokenizerPayloadSerializer
     {
-        var vocab = new Vocabulary();
-        
-        JsonElement charsElement;
-        bool hasProperty = payload.TryGetProperty("chars", out charsElement);
-
-        if (hasProperty && charsElement.ValueKind == JsonValueKind.Array)
+        public static Vocabulary DeserializeCharVocab(JsonElement payload)
         {
-            var charsList = new List<string>();
-            foreach (JsonElement item in charsElement.EnumerateArray())
-            {
-                string text = item.GetString();
-                if (text == null)
-                {
-                    text = "";
-                }
-                charsList.Add(text);
-            }
-            vocab.LoadFromPayload(charsList);
-        }
-        return vocab;
-    }
-    
-    public static WordVocabulary DeserializeWordVocab(JsonElement payload)
-    {
-        var vocab = new WordVocabulary();
-        
-        JsonElement wordsElement;
-        bool hasProperty = payload.TryGetProperty("words", out wordsElement);
+            var vocab = new Vocabulary();
 
-        if (hasProperty && wordsElement.ValueKind == JsonValueKind.Array)
-        {
-            var wordsList = new List<string>();
-            foreach (JsonElement item in wordsElement.EnumerateArray())
+            JsonElement charsElement;
+            bool hasProperty = payload.TryGetProperty("chars", out charsElement);
+
+            if (hasProperty && charsElement.ValueKind == JsonValueKind.Array)
             {
-                string text = item.GetString();
-                if (text == null)
+                var charsList = new List<string>();
+                foreach (JsonElement item in charsElement.EnumerateArray())
                 {
-                    text = "";
+                    string text = item.GetString();
+                    if (text == null)
+                    {
+                        text = "";
+                    }
+                    charsList.Add(text);
                 }
-                wordsList.Add(text);
+                vocab.LoadFromPayload(charsList);
             }
-            vocab.LoadFromPayload(wordsList);
+            return vocab;
         }
-        return vocab;
+
+        public static WordVocabulary DeserializeWordVocab(JsonElement payload)
+        {
+            var vocab = new WordVocabulary();
+
+            JsonElement wordsElement;
+            bool hasProperty = payload.TryGetProperty("words", out wordsElement);
+
+            if (hasProperty && wordsElement.ValueKind == JsonValueKind.Array)
+            {
+                var wordsList = new List<string>();
+                foreach (JsonElement item in wordsElement.EnumerateArray())
+                {
+                    string text = item.GetString();
+                    if (text == null)
+                    {
+                        text = "";
+                    }
+                    wordsList.Add(text);
+                }
+                vocab.LoadFromPayload(wordsList);
+            }
+            return vocab;
+        }
     }
 }
-
-
-
-

@@ -1,4 +1,11 @@
-﻿namespace Integration.DataPipeline.Tests;
+﻿using Lib.Corpus.Configuration;
+using Lib.Corpus.Domain;
+using Lib.Corpus.Infrastructure;
+using Lib.Corpus.Processing;
+using Lib.Tokenization.Interfaces;
+using Lib.Tokenization.Model;
+
+namespace Integration.DataPipeline.Tests;
 
 public class Fake : IFileSystem
 {

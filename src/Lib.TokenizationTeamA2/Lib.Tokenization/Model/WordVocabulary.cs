@@ -1,108 +1,111 @@
 
 using System.Text.RegularExpressions;
 
-public class WordVocabulary
+namespace Lib.Tokenization.Model
 {
-    private readonly Dictionary<string, int> _wordToId = new Dictionary<string, int>();
-    private readonly Dictionary<int, string> _idToWord = new Dictionary<int, string>();
-
-    public int Size
+    public class WordVocabulary
     {
-        get { return _wordToId.Count; }
-    }
+        private readonly Dictionary<string, int> _wordToId = new Dictionary<string, int>();
+        private readonly Dictionary<int, string> _idToWord = new Dictionary<int, string>();
 
-    public const int UnkId = 0;
-    public const string UnkWord = "<UNK>";
-
-    public WordVocabulary()
-    {
-        _wordToId[UnkWord] = UnkId;
-        _idToWord[UnkId] = UnkWord;
-    }
-
-    public void BuildFromText(string text)
-    {
-        if (string.IsNullOrWhiteSpace(text))
+        public int Size
         {
-            return;
+            get { return _wordToId.Count; }
         }
 
-        string[] rawWords = Regex.Split(text, @"\s+");    // Розбиває на масив як Split() , проте ігнорує всі пробіли і переходи на інший рядок
-        int nextId = Size;
+        public const int UnkId = 0;
+        public const string UnkWord = "<UNK>";
 
-        foreach (string w in rawWords)
+        public WordVocabulary()
         {
-            if (string.IsNullOrWhiteSpace(w))
+            _wordToId[UnkWord] = UnkId;
+            _idToWord[UnkId] = UnkWord;
+        }
+
+        public void BuildFromText(string text)
+        {
+            if (string.IsNullOrWhiteSpace(text))
             {
-                continue;
+                return;
             }
 
-            string cleanedWord = CleanWord(w);
-            if (string.IsNullOrEmpty(cleanedWord) == false && _wordToId.ContainsKey(cleanedWord) == false)
+            string[] rawWords = Regex.Split(text, @"\s+");    // Розбиває на масив як Split() , проте ігнорує всі пробіли і переходи на інший рядок
+            int nextId = Size;
+
+            foreach (string w in rawWords)
             {
-                _wordToId[cleanedWord] = nextId;
-                _idToWord[nextId] = cleanedWord;
-                nextId++;
+                if (string.IsNullOrWhiteSpace(w))
+                {
+                    continue;
+                }
+
+                string cleanedWord = CleanWord(w);
+                if (string.IsNullOrEmpty(cleanedWord) == false && _wordToId.ContainsKey(cleanedWord) == false)
+                {
+                    _wordToId[cleanedWord] = nextId;
+                    _idToWord[nextId] = cleanedWord;
+                    nextId++;
+                }
             }
         }
-    }
 
-    public static string CleanWord(string word)
-    {
-        var cleaned = new System.Text.StringBuilder(); //Дописує в кінець  не переписуючи все заново
-        foreach (char c in word)
+        public static string CleanWord(string word)
         {
-            if (char.IsPunctuation(c) == false)
+            var cleaned = new System.Text.StringBuilder(); //Дописує в кінець  не переписуючи все заново
+            foreach (char c in word)
             {
-                cleaned.Append(c);
+                if (char.IsPunctuation(c) == false)
+                {
+                    cleaned.Append(c);
+                }
+            }
+            return cleaned.ToString().ToLowerInvariant();
+        }
+
+        public int GetId(string word)
+        {
+            if (_wordToId.ContainsKey(word))
+            {
+                return _wordToId[word];
+            }
+            else
+            {
+                return UnkId;
             }
         }
-        return cleaned.ToString().ToLowerInvariant();
-    }
 
-    public int GetId(string word)
-    {
-        if (_wordToId.ContainsKey(word))
+        public string GetWord(int id)
         {
-            return _wordToId[word];
+            if (_idToWord.ContainsKey(id))
+            {
+                return _idToWord[id];
+            }
+            else
+            {
+                return UnkWord;
+            }
         }
-        else
-        {
-            return UnkId;
-        }
-    }
 
-    public string GetWord(int id)
-    {
-        if (_idToWord.ContainsKey(id))
+        public List<string> GetPayload()
         {
-            return _idToWord[id];
+            var list = new List<string>();
+            for (int i = 0; i < Size; i++)
+            {
+                list.Add(GetWord(i));
+            }
+            return list;
         }
-        else
-        {
-            return UnkWord;
-        }
-    }
 
-    public List<string> GetPayload()
-    {
-        var list = new List<string>();
-        for (int i = 0; i < Size; i++)
+        public void LoadFromPayload(List<string> words)
         {
-            list.Add(GetWord(i));
-        }
-        return list;
-    }
-
-    public void LoadFromPayload(List<string> words)
-    {
-        _wordToId.Clear();
-        _idToWord.Clear();
-        for (int i = 0; i < words.Count; i++)
-        {
-            string w = words[i];
-            _wordToId[w] = i;
-            _idToWord[i] = w;
+            _wordToId.Clear();
+            _idToWord.Clear();
+            for (int i = 0; i < words.Count; i++)
+            {
+                string w = words[i];
+                _wordToId[w] = i;
+                _idToWord[i] = w;
+            }
         }
     }
 }

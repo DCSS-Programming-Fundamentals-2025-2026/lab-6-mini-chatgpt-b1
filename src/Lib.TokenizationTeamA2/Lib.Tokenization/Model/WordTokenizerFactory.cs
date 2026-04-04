@@ -1,22 +1,26 @@
+using Lib.Tokenization.Interfaces;
+using Lib.Tokenization.Serialization;
+using Lib.Tokenization.Tokanizers;
 using System.Text.Json;
 
-public class WordTokenizerFactory : ITokenizerFactory
+namespace Lib.Tokenization.Model
 {
-    public ITokenizer BuildFromText(string text)
+    public class WordTokenizerFactory : ITokenizerFactory
     {
-        var vocab = new WordVocabulary();
-        if (string.IsNullOrEmpty(text) == false)
+        public ITokenizer BuildFromText(string text)
         {
-            vocab.BuildFromText(text);
+            var vocab = new WordVocabulary();
+            if (string.IsNullOrEmpty(text) == false)
+            {
+                vocab.BuildFromText(text);
+            }
+            return new WordTokenizer(vocab);
         }
-        return new WordTokenizer(vocab);
-    }
 
-    public ITokenizer FromPayload(JsonElement payload)
-    {
-        var vocab = TokenizerPayloadSerializer.DeserializeWordVocab(payload);
-        return new WordTokenizer(vocab);
+        public ITokenizer FromPayload(JsonElement payload)
+        {
+            var vocab = TokenizerPayloadSerializer.DeserializeWordVocab(payload);
+            return new WordTokenizer(vocab);
+        }
     }
 }
-
-

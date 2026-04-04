@@ -1,9 +1,10 @@
-public interface ITokenizer
+namespace Lib.Tokenization.Interfaces
 {
-    int VocabSize { get; }
-    int[] Encode(string text);
-    string Decode(ReadOnlySpan<int> tokens);
-    object GetPayloadForCheckpoint();
+    public interface ITokenizer
+    {
+        int VocabSize { get; }
+        int[] Encode(string text);
+        string Decode(ReadOnlySpan<int> tokens);
+        object GetPayloadForCheckpoint();
+    }
 }
-
-
