@@ -25,4 +25,12 @@
     <Using Include="NUnit.Framework" />
   </ItemGroup>
 
+<ItemGroup>
+    <None Update="existing.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
+
+
 </Project>

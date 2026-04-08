@@ -13,6 +13,7 @@ public class SplitterTests
     public void Setup()
     {
         content = "alpha beta gamma delta epsilon zeta eta theta iota kappa lambda mu nu xi omicron pi rho sigma tau up";
+        validateFraction = 0.1;
     }
 
     [Test]
